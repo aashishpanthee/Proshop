@@ -4,6 +4,7 @@ import colors from "colors";
 dotenv.config();
 import connectDB from "./config/db.js";
 import productRoute from "./routes/productRoute.js";
+import userRoute from "./routes/userRoute.js";
 const port = process.env.PORT || 5000;
 
 import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
@@ -16,6 +17,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/products", productRoute);
+app.use("/api/users", userRoute);
 
 app.use(notFound); // this will be the last middleware
 app.use(errorHandler); // this will be the last middleware
