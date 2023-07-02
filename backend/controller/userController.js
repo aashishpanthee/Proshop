@@ -10,7 +10,7 @@ const authUser = asyncHandler(async (req, res) => {
   const user = await User.findOne({ email });
   if (user && (await user.matchPassword(password))) {
     generateToken(res, user._id);
-    res.json({
+    res.status(200).json({
       _id: user._id,
       name: user.name,
       email: user.email,
@@ -62,14 +62,44 @@ const logoutUser = asyncHandler(async (req, res) => {
 // @route   Get /api/users/profile
 // @access  Private
 const getUserProfile = asyncHandler(async (req, res) => {
-  res.send("get user profile");
+  const user = await User.findById(req.user._id);
+  if (user) {
+    res.status(200).json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      isAdmin: user.isAdmin,
+    });
+  } else {
+    res.status(404);
+    throw new Error("User not found");
+  }
 });
 
 // @desc    Update user profile
 // @route   Put /api/users/profile
 // @access  Private
 const updateUserProfile = asyncHandler(async (req, res) => {
-  res.send("update user profile");
+  const { name, email, password } = req.body;
+  const user = await User.findById(req.user._id);
+  if (user) {
+    user.name = name || user.name;
+    user.email = email || user.email;
+    if (password) {
+      user.password = password;
+    }
+    //  After updating the relevant fields of the user object, calling user.save() persists the changes to the database.
+    const updatedUser = await user.save(); // save() will trigger the pre save middleware in userModel.js
+    res.status(200).json({
+      _id: updatedUser._id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      isAdmin: updatedUser.isAdmin,
+    });
+  } else {
+    res.status(404);
+    throw new Error("User not found");
+  }
 });
 
 // @desc    Get all users
