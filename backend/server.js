@@ -28,8 +28,8 @@ app.get("/", (req, res) => {
 app.use("/api/products", productRoute);
 app.use("/api/users", userRoute);
 
-app.use(notFound); // this will be the last middleware
-app.use(errorHandler); // this will be the last middleware
+app.use(notFound); //  any request that does not match a defined route will be handled by the notFound middleware,
+app.use(errorHandler); // This middleware is responsible for handling errors that occur during the processing of a request or in any previous middleware.
 app.listen(port, () => {
   console.log(`Server at http://localhost:${port}`.bgGreen.black);
 });
