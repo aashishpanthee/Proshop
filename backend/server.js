@@ -1,6 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import colors from "colors";
+import cookieParser from "cookie-parser";
 dotenv.config();
 import connectDB from "./config/db.js";
 import productRoute from "./routes/productRoute.js";
@@ -16,7 +17,11 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Cookie parser middleware
+app.use(cookieParser());
+
 app.get("/", (req, res) => {
+  s;
   res.send(`Server is ready`);
 });
 
