@@ -7,6 +7,7 @@ dotenv.config();
 import connectDB from "./config/db.js";
 import productRoute from "./routes/productRoute.js";
 import userRoute from "./routes/userRoute.js";
+import orderRoute from "./routes/orderRoute.js";
 const port = process.env.PORT || 5000;
 
 import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
@@ -29,6 +30,7 @@ app.get("/", (req, res) => {
 
 app.use("/api/products", productRoute);
 app.use("/api/users", userRoute);
+app.use("/api/orders", orderRoute);
 
 app.use(notFound); //  any request that does not match a defined route will be handled by the notFound middleware,
 app.use(errorHandler); // This middleware is responsible for handling errors that occur during the processing of a request or in any previous middleware.
