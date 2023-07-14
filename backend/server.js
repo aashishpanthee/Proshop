@@ -1,7 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
 import colors from "colors";
-import cors from "cors";
 import cookieParser from "cookie-parser";
 dotenv.config();
 import connectDB from "./config/db.js";
@@ -15,7 +14,6 @@ connectDB(); //Connection to MONGODB
 
 const app = express();
 
-app.use(cors());
 // Body parser middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
