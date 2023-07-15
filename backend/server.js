@@ -30,6 +30,10 @@ app.use("/api/products", productRoute);
 app.use("/api/users", userRoute);
 app.use("/api/orders", orderRoute);
 
+app.get("/api/config/paypal", (req, res) =>
+  res.send({ clientId: process.env.PAYPAL_CLIENT_ID })
+);
+
 app.use(notFound); //  any request that does not match a defined route will be handled by the notFound middleware,
 app.use(errorHandler); // This middleware is responsible for handling errors that occur during the processing of a request or in any previous middleware.
 app.listen(port, () => {
